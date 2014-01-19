@@ -1,0 +1,321 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PropertyManagementSystemDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="PropertyManagementSystemDBModelStoreContainer">
+          <EntitySet Name="Complaint" EntityType="PropertyManagementSystemDBModel.Store.Complaint" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Payment" EntityType="PropertyManagementSystemDBModel.Store.Payment" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Property" EntityType="PropertyManagementSystemDBModel.Store.Property" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PropertyManagementFee" EntityType="PropertyManagementSystemDBModel.Store.PropertyManagementFee" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PropertyOwner" EntityType="PropertyManagementSystemDBModel.Store.PropertyOwner" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK__Complaint__Prope__1A14E395" Association="PropertyManagementSystemDBModel.Store.FK__Complaint__Prope__1A14E395">
+            <End Role="PropertyOwner" EntitySet="PropertyOwner" />
+            <End Role="Complaint" EntitySet="Complaint" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Payment__Propert__1B0907CE" Association="PropertyManagementSystemDBModel.Store.FK__Payment__Propert__1B0907CE">
+            <End Role="PropertyManagementFee" EntitySet="PropertyManagementFee" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Payment__Propert__21B6055D" Association="PropertyManagementSystemDBModel.Store.FK__Payment__Propert__21B6055D">
+            <End Role="PropertyOwner" EntitySet="PropertyOwner" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Property__Proper__47DBAE45" Association="PropertyManagementSystemDBModel.Store.FK__Property__Proper__47DBAE45">
+            <End Role="PropertyOwner" EntitySet="PropertyOwner" />
+            <End Role="Property" EntitySet="Property" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Complaint">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Content" Type="varchar(max)" Nullable="false" />
+          <Property Name="DateTime" Type="date" Nullable="false" />
+          <Property Name="PropertyOwnerId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="PropertyOwnerId" Type="int" Nullable="false" />
+          <Property Name="PropertyManagementFeeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Property">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Address" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="PropertyOwnerId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PropertyManagementFee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="From" Type="date" Nullable="false" />
+          <Property Name="To" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PropertyOwner">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Givenname" Type="varchar" MaxLength="50" />
+          <Property Name="Surname" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__Complaint__Prope__1A14E395">
+          <End Role="PropertyOwner" Type="PropertyManagementSystemDBModel.Store.PropertyOwner" Multiplicity="1" />
+          <End Role="Complaint" Type="PropertyManagementSystemDBModel.Store.Complaint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PropertyOwner">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Complaint">
+              <PropertyRef Name="PropertyOwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Payment__Propert__1B0907CE">
+          <End Role="PropertyManagementFee" Type="PropertyManagementSystemDBModel.Store.PropertyManagementFee" Multiplicity="1" />
+          <End Role="Payment" Type="PropertyManagementSystemDBModel.Store.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PropertyManagementFee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="PropertyManagementFeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Payment__Propert__21B6055D">
+          <End Role="PropertyOwner" Type="PropertyManagementSystemDBModel.Store.PropertyOwner" Multiplicity="1" />
+          <End Role="Payment" Type="PropertyManagementSystemDBModel.Store.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PropertyOwner">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="PropertyOwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Property__Proper__47DBAE45">
+          <End Role="PropertyOwner" Type="PropertyManagementSystemDBModel.Store.PropertyOwner" Multiplicity="1" />
+          <End Role="Property" Type="PropertyManagementSystemDBModel.Store.Property" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PropertyOwner">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Property">
+              <PropertyRef Name="PropertyOwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PropertyManagementSystemDBModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="PropertyManagementSystemDBEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Complaints" EntityType="PropertyManagementSystemDBModel.Complaint" />
+          <EntitySet Name="Payments" EntityType="PropertyManagementSystemDBModel.Payment" />
+          <EntitySet Name="Properties" EntityType="PropertyManagementSystemDBModel.Property" />
+          <EntitySet Name="PropertyManagementFees" EntityType="PropertyManagementSystemDBModel.PropertyManagementFee" />
+          <EntitySet Name="PropertyOwners" EntityType="PropertyManagementSystemDBModel.PropertyOwner" />
+          <AssociationSet Name="FK__Complaint__Prope__1A14E395" Association="PropertyManagementSystemDBModel.FK__Complaint__Prope__1A14E395">
+            <End Role="PropertyOwner" EntitySet="PropertyOwners" />
+            <End Role="Complaint" EntitySet="Complaints" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Payment__Propert__1B0907CE" Association="PropertyManagementSystemDBModel.FK__Payment__Propert__1B0907CE">
+            <End Role="PropertyManagementFee" EntitySet="PropertyManagementFees" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Property__Proper__1BFD2C07" Association="PropertyManagementSystemDBModel.FK__Property__Proper__1BFD2C07">
+            <End Role="PropertyOwner" EntitySet="PropertyOwners" />
+            <End Role="Property" EntitySet="Properties" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Payment__Propert__21B6055D" Association="PropertyManagementSystemDBModel.FK__Payment__Propert__21B6055D">
+            <End Role="PropertyOwner" EntitySet="PropertyOwners" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Complaint">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Content" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PropertyOwnerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PropertyOwner" Relationship="PropertyManagementSystemDBModel.FK__Complaint__Prope__1A14E395" FromRole="Complaint" ToRole="PropertyOwner" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="PropertyOwnerId" Type="Int32" Nullable="false" />
+          <Property Name="PropertyManagementFeeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PropertyManagementFee" Relationship="PropertyManagementSystemDBModel.FK__Payment__Propert__1B0907CE" FromRole="Payment" ToRole="PropertyManagementFee" />
+          <NavigationProperty Name="PropertyOwner" Relationship="PropertyManagementSystemDBModel.FK__Payment__Propert__21B6055D" FromRole="Payment" ToRole="PropertyOwner" />
+        </EntityType>
+        <EntityType Name="Property">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="PropertyOwnerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PropertyOwner" Relationship="PropertyManagementSystemDBModel.FK__Property__Proper__1BFD2C07" FromRole="Property" ToRole="PropertyOwner" />
+        </EntityType>
+        <EntityType Name="PropertyManagementFee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="From" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="To" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Payments" Relationship="PropertyManagementSystemDBModel.FK__Payment__Propert__1B0907CE" FromRole="PropertyManagementFee" ToRole="Payment" />
+        </EntityType>
+        <EntityType Name="PropertyOwner">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Givenname" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Surname" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Complaints" Relationship="PropertyManagementSystemDBModel.FK__Complaint__Prope__1A14E395" FromRole="PropertyOwner" ToRole="Complaint" />
+          <NavigationProperty Name="Properties" Relationship="PropertyManagementSystemDBModel.FK__Property__Proper__1BFD2C07" FromRole="PropertyOwner" ToRole="Property" />
+          <NavigationProperty Name="Payments" Relationship="PropertyManagementSystemDBModel.FK__Payment__Propert__21B6055D" FromRole="PropertyOwner" ToRole="Payment" />
+        </EntityType>
+        <Association Name="FK__Complaint__Prope__1A14E395">
+          <End Role="PropertyOwner" Type="PropertyManagementSystemDBModel.PropertyOwner" Multiplicity="1" />
+          <End Role="Complaint" Type="PropertyManagementSystemDBModel.Complaint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PropertyOwner">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Complaint">
+              <PropertyRef Name="PropertyOwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Payment__Propert__1B0907CE">
+          <End Role="PropertyManagementFee" Type="PropertyManagementSystemDBModel.PropertyManagementFee" Multiplicity="1" />
+          <End Role="Payment" Type="PropertyManagementSystemDBModel.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PropertyManagementFee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="PropertyManagementFeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Property__Proper__1BFD2C07">
+          <End Role="PropertyOwner" Type="PropertyManagementSystemDBModel.PropertyOwner" Multiplicity="1" />
+          <End Role="Property" Type="PropertyManagementSystemDBModel.Property" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PropertyOwner">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Property">
+              <PropertyRef Name="PropertyOwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Payment__Propert__21B6055D">
+          <End Type="PropertyManagementSystemDBModel.PropertyOwner" Role="PropertyOwner" Multiplicity="1" />
+          <End Type="PropertyManagementSystemDBModel.Payment" Role="Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PropertyOwner">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="PropertyOwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PropertyManagementSystemDBModelStoreContainer" CdmEntityContainer="PropertyManagementSystemDBEntities">
+          <EntitySetMapping Name="Complaints">
+            <EntityTypeMapping TypeName="PropertyManagementSystemDBModel.Complaint">
+              <MappingFragment StoreEntitySet="Complaint">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="PropertyOwnerId" ColumnName="PropertyOwnerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="PropertyManagementSystemDBModel.Payment">
+              <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="PropertyOwnerId" ColumnName="PropertyOwnerId" />
+                <ScalarProperty Name="PropertyManagementFeeId" ColumnName="PropertyManagementFeeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Properties">
+            <EntityTypeMapping TypeName="PropertyManagementSystemDBModel.Property">
+              <MappingFragment StoreEntitySet="Property">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PropertyOwnerId" ColumnName="PropertyOwnerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PropertyManagementFees">
+            <EntityTypeMapping TypeName="PropertyManagementSystemDBModel.PropertyManagementFee">
+              <MappingFragment StoreEntitySet="PropertyManagementFee">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="From" ColumnName="From" />
+                <ScalarProperty Name="To" ColumnName="To" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PropertyOwners">
+            <EntityTypeMapping TypeName="PropertyManagementSystemDBModel.PropertyOwner">
+              <MappingFragment StoreEntitySet="PropertyOwner">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Givenname" ColumnName="Givenname" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
